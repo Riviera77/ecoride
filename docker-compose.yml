@@ -11,7 +11,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./src:/var/www/html
-      - ./config/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
     ports:
       - '8080:80'
     depends_on:
@@ -30,7 +30,7 @@ services:
       MYSQL_USER: ecoride_user
       MYSQL_PASSWORD: userpassword
     volumes:
-      - ./data/mariadb:/var/lib/mysql
+      - ./docker/mariadb/data:/var/lib/mysql
     networks:
       - ecoride_network
 
@@ -41,7 +41,7 @@ services:
     ports:
       - '27017:27017' # Optionnel si vous n'avez besoin que d'un accès interne
     volumes:
-      - ./data/mongo:/data/db
+      - ./docker/mongo/data:/data/db
     environment:
       MONGO_INITDB_DATABASE: ecoride
     networks:
