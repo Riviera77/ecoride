@@ -1,0 +1,48 @@
+networks:
+  ecoride_network:
+    driver: bridge
+
+services:
+  php:
+    image: php:8.2-apache
+    container_name: ecoride_php
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/var/www/html
+      - ./config/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - '8080:80'
+    depends_on:
+      - mariadb
+      - mongo
+    networks:
+      - ecoride_network
+
+  mariadb:
+    image: mariadb:latest
+    container_name: ecoride_mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ecoride_db
+      MYSQL_USER: ecoride_user
+      MYSQL_PASSWORD: userpassword
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    networks:
+      - ecoride_network
+
+  mongo:
+    image: mongo:6.0
+    container_name: ecoride_mongo
+    restart: always
+    ports:
+      - '27017:27017' # Optionnel si vous n'avez besoin que d'un accès interne
+    volumes:
+      - ./data/mongo:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: ecoride
+    networks:
+      - ecoride_network
