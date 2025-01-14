@@ -1,0 +1,19 @@
+{
+    "name": "grey972.c/ecoride",
+    "description": "ecological carpooling platform",
+    "type": "project",
+    "require": {
+        "monolog/monolog": "^3.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Grey972C\\Ecoride\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Riviera77",
+            "email": "103321314+Riviera77@users.noreply.github.com"
+        }
+    ]
+}
